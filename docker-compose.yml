@@ -5,8 +5,24 @@ services:
       dockerfile: Dockerfile.local
     container_name: celerity_github_registry
     environment:
-      CELERITY_GITHUB_REGISTRY_TEST_ENV_VAR: "test"
+      CELERITY_GITHUB_REGISTRY_BASE_URL: ${CELERITY_GITHUB_REGISTRY_BASE_URL}
+    networks:
+      - gh_registry_network
     ports:
       - 8085:8085
     volumes:
       - ./:/app/celerity_github_registry
+
+  nginx:
+    image: nginx:latest
+    container_name: celerity_github_registry_nginx
+    networks:
+      - gh_registry_network
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.local.conf:/etc/nginx/conf.d/default.conf
+
+networks:
+  gh_registry_network:
+    name: gh_registry_network

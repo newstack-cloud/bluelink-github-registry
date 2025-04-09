@@ -26,6 +26,20 @@ Install dependencies from the root directory by simply running:
 yarn
 ```
 
+### Setting hosts for the local registry
+
+To run the registry locally, you need to set up a local DNS entry for the registry.
+This can be done by adding the following line to your `/etc/hosts` (or equivalent) file:
+
+```bash
+127.0.0.1 gh-registry.celerity.local
+```
+
+This will allow you to access the registry at `http://gh-registry.celerity.local`
+when you spin up the registry locally using the provided docker compose stack.
+
+**If you are not using the default port (8085), you will need to update `nginx.local.conf` to use your alternate port.**
+
 ### Go dependencies
 
 Dependencies are managed with Go modules (go.mod) and will be installed automatically when you first

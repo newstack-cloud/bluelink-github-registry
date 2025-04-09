@@ -39,6 +39,9 @@ fi
 set -e
 echo "" > coverage.txt
 
+# Ensure test env vars are exported for tests to use.
+export $(grep -v '^#' .env.test | xargs)
+
 go test -timeout 30000ms -race -coverprofile=coverage.txt -coverpkg=./... -covermode=atomic `go list ./... | egrep -v '(/(testutils))$'`
 
 if [ -z "$GITHUB_ACTION" ]; then
