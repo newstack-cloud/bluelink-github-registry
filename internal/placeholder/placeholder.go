@@ -1,7 +1,12 @@
 package placeholder
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/gorilla/mux"
+)
 
 func DoSomething() {
 	fmt.Println("Doing something...")
+	mux.NewRouter()
 }
