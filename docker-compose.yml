@@ -1,0 +1,12 @@
+services:
+  celerity_github_registry:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: celerity_github_registry
+    environment:
+      CELERITY_GITHUB_REGISTRY_TEST_ENV_VAR: "test"
+    ports:
+      - 8085:8085
+    volumes:
+      - ./:/app/celerity_github_registry
