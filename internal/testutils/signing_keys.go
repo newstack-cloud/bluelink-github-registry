@@ -59,6 +59,10 @@ func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
 			"contains ASCII armor footer?",
 			strings.Contains(key.PublicKey, "-----END PGP PUBLIC KEY BLOCK-----"),
 		)
+		fmt.Println(
+			"contains literal new line characters that have not been unescaped?",
+			strings.Contains(key.PublicKey, "\\n"),
+		)
 		keyID, err := signingkeys.ExtractHexKeyID(key.PublicKey)
 		if err != nil {
 			return nil, err
