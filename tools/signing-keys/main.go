@@ -82,7 +82,9 @@ func main() {
 			lines = append(lines, envVarLine)
 		}
 
-		err = os.WriteFile(insertInto, []byte(strings.Join(lines, "\n")), 0644)
+		finalLines := removeEmptyLines(lines)
+
+		err = os.WriteFile(insertInto, []byte(strings.Join(finalLines, "\n")), 0644)
 		if err != nil {
 			fmt.Printf("Error writing to .env file %s: %v\n", insertInto, err)
 		}
@@ -91,4 +93,14 @@ func main() {
 
 	fmt.Println("Add the following to your .env file:")
 	fmt.Println(envVarLine)
+}
+
+func removeEmptyLines(lines []string) []string {
+	var nonEmptyLines []string
+	for _, line := range lines {
+		if strings.TrimSpace(line) != "" {
+			nonEmptyLines = append(nonEmptyLines, line)
+		}
+	}
+	return nonEmptyLines
 }
