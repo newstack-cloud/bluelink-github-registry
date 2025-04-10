@@ -43,12 +43,10 @@ jobs:
     - name: Prepare Env Vars and Public Signing Keys for Tests
       run: |
         cp .env.test.example .env.test
-        echo $TEST_GPG_PUBLIC_KEY > test.key
-        go run tools/signing-keys/main.go -insert=.env.test test.key
-      env:
-        TEST_GPG_PUBLIC_KEY: ${{ secrets.TEST_GPG_PUBLIC_KEY }}
     - name: Run Tests
       run: bash scripts/run-tests.sh
+      env:
+        CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS: ${{ secrets.TEST_GPG_PUBLIC_KEY }}
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@master
