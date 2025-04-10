@@ -75,9 +75,15 @@ func Setup(
 	// to the underlying repositories, if those requests fail due to auth issues,
 	// then those errors will be returned to the client.
 	protocolRouter := router.PathPrefix("/plugins/").Subrouter()
+
 	protocolRouter.Handle(
 		"/{organisation}/{plugin}/versions",
 		GetPluginVersionsHandler(&config, appLogger, deps.pluginService),
+	).Methods("GET")
+
+	protocolRouter.Handle(
+		"/{organisation}/{plugin}/{version}/package/{os}/{arch}",
+		GetPluginPackageHandler(&config, appLogger, deps.pluginService),
 	).Methods("GET")
 
 	return config.Port, accessLogWriter, nil

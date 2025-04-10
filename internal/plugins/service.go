@@ -2,6 +2,7 @@ package plugins
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/google/go-github/v70/github"
@@ -12,6 +13,16 @@ import (
 	"github.com/two-hundred/celerity-github-registry/internal/utils"
 	"go.uber.org/zap"
 )
+
+// PackageInfoParams holds the parameters required
+// to retrieve package information for a plugin version.
+type PackageInfoParams struct {
+	Organisation string
+	Plugin       string
+	Version      string
+	OS           string
+	Arch         string
+}
 
 // Service provides an interface for a service
 // that allows fetching plugin version information
@@ -27,6 +38,15 @@ type Service interface {
 		plugin string,
 		token string,
 	) (*types.PluginVersions, error)
+
+	// GetPackageInfo retrieves the package information
+	// for a given plugin version and platform, including
+	// the URLs for the package and the SHA256 checksum.
+	GetPackageInfo(
+		ctx context.Context,
+		params *PackageInfoParams,
+		token string,
+	) (*types.PluginVersionPackage, error)
 }
 
 type serviceImpl struct {
@@ -84,6 +104,47 @@ func (s *serviceImpl) ListVersions(
 		ctx,
 		repository,
 		releases,
+		s.httpClient,
+		token,
+	)
+}
+
+func (s *serviceImpl) GetPackageInfo(
+	ctx context.Context,
+	params *PackageInfoParams,
+	token string,
+) (*types.PluginVersionPackage, error) {
+	repository, err := s.getPluginRepo(
+		ctx,
+		params.Organisation,
+		params.Plugin,
+		token,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	release, _, err := s.repoService.GetReleaseByTag(
+		ctx,
+		params.Organisation,
+		repository,
+		fmt.Sprintf("v%s", params.Version),
+		token,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return utils.ExtractPluginVersionPackage(
+		ctx,
+		&utils.ExtractPluginVersionPackageParams{
+			Repository:            repository,
+			Release:               release,
+			Version:               params.Version,
+			OS:                    params.OS,
+			Arch:                  params.Arch,
+			SigningKeysSerialised: s.config.PublicSigningKeysString,
+		},
 		s.httpClient,
 		token,
 	)

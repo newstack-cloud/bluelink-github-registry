@@ -15,12 +15,12 @@ import (
 	"go.uber.org/zap"
 )
 
-type GetPluginVersionsHandlerTestSuite struct {
+type GetPluginPackageHandlerTestSuite struct {
 	suite.Suite
 	server *httptest.Server
 }
 
-func (s *GetPluginVersionsHandlerTestSuite) SetupTest() {
+func (s *GetPluginPackageHandlerTestSuite) SetupTest() {
 	router := mux.NewRouter()
 
 	getDeps := func(
@@ -42,14 +42,14 @@ func (s *GetPluginVersionsHandlerTestSuite) SetupTest() {
 	s.server = server
 }
 
-func (s *GetPluginVersionsHandlerTestSuite) TearDownTest() {
+func (s *GetPluginPackageHandlerTestSuite) TearDownTest() {
 	s.server.Close()
 }
 
-func (s *GetPluginVersionsHandlerTestSuite) Test_get_plugin_versions() {
+func (s *GetPluginPackageHandlerTestSuite) Test_get_plugin_versions() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/two-hundred/aws/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
@@ -63,20 +63,20 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_get_plugin_versions() {
 	respBytes, err := io.ReadAll(resp.Body)
 	s.Require().NoError(err)
 
-	versions := &types.PluginVersions{}
-	err = json.Unmarshal(respBytes, versions)
+	pkg := &types.PluginVersionPackage{}
+	err = json.Unmarshal(respBytes, pkg)
 	s.Require().NoError(err)
 
 	s.Require().Equal(
-		expectedVersions,
-		versions,
+		expectedVersionPackage,
+		pkg,
 	)
 }
 
-func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_missing_token() {
+func (s *GetPluginPackageHandlerTestSuite) Test_returns_401_response_for_missing_token() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/two-hundred/aws/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
@@ -94,10 +94,10 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_missin
 	)
 }
 
-func (s *GetPluginVersionsHandlerTestSuite) Test_returns_404_response_for_missing_plugin_repo() {
+func (s *GetPluginPackageHandlerTestSuite) Test_returns_404_response_for_missing_plugin_repo() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/azure/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/two-hundred/azure/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
@@ -115,6 +115,6 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_404_response_for_missin
 	)
 }
 
-func TestGetPluginVersionsHandlerTestSuite(t *testing.T) {
-	suite.Run(t, new(GetPluginVersionsHandlerTestSuite))
+func TestGetPluginPackageHandlerTestSuite(t *testing.T) {
+	suite.Run(t, new(GetPluginPackageHandlerTestSuite))
 }

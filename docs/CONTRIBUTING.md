@@ -51,6 +51,27 @@ If you want to install dependencies manually you can run:
 go mod download
 ```
 
+### Preparing Environment Variables
+
+You will need to prepare environment variables for the local development environment,
+both for tests and for running the service locally.
+
+1) Copy the `.env.example` file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+2) Prepare an ASCII-armored public key file (extracted from a GPG key) named `public.key` in the root directory.
+
+3) Run the tool to inject the public key into the signing keys environment variable:
+
+```bash
+go run ./tools/signing-keys/main.go -insert=.env public.key
+```
+
+4) Repeat steps 1-3 for the `.env.test.example` file to create and populate the `.env.test` file.
+
 ## Running tests
 
 ```bash

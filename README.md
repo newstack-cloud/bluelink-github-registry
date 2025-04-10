@@ -94,6 +94,7 @@ _Even when running locally, it is best to use a host name alias instead of local
 
 A serialised JSON string that contains the gpg public keys that can be used by the Celerity CLI (and other clients) to verify the signatures of the plugins in the registry as per the [Registry Protocol](https://www.celerityframework.io/plugin-framework/docs/registry-protocols-formats/registry-protocol).
 The amount of signing keys that can be stored in this environment variable is limited by the maximum length (in bytes) of an environment variable in the operating system running the registry application.
+You can find instructions to generate the signing keys environment variable [here](docs/SIGNING_KEYS.md).
 
 The JSON contents should be of the following form:
 

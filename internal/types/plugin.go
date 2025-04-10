@@ -28,3 +28,38 @@ type PluginVersionPlatform struct {
 type PluginRegistryInfo struct {
 	SupportedProtocols []string `json:"supportedProtocols"`
 }
+
+// PluginVersionPackage holds the information about
+// the package information for a plugin version
+// that is published with a plugin version release.
+// This represents the structure of a plugin version package
+// expected by the Celerity registry protocol.
+type PluginVersionPackage struct {
+	SupportedProtocols  []string              `json:"supportedProtocols"`
+	OS                  string                `json:"os"`
+	Arch                string                `json:"arch"`
+	Filename            string                `json:"filename"`
+	DownloadURL         string                `json:"downloadUrl"`
+	SHASumsURL          string                `json:"shasumsUrl"`
+	SHASumsSignatureURL string                `json:"shasumsSignatureUrl"`
+	SHASum              string                `json:"shasum"`
+	SigningKeys         *PublicGPGSigningKeys `json:"signingKeys"`
+}
+
+// PublicGPGSigningKeys holds the information about
+// the public GPG signing keys for a plugin version
+// that is published with a plugin version release.
+type PublicGPGSigningKeys struct {
+	GPG []*PublicGPGSigningKey `json:"gpg"`
+}
+
+// PublicGPGSigningKey holds the information about
+// a public GPG signing key that can be used to verify
+// the authenticity of a plugin version package.
+type PublicGPGSigningKey struct {
+	HexKeyID string `json:"keyId"`
+	// The ASCII armored public key
+	// that can be used to verify the signature
+	// of the plugin version package.
+	PublicKey string `json:"publicKey"`
+}

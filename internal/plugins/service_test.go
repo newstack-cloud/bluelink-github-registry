@@ -2,6 +2,7 @@ package plugins
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/google/go-github/v70/github"
@@ -21,15 +22,18 @@ func (s *DefaultServiceTestSuite) SetupTest() {
 	logger, err := zap.NewDevelopment()
 	s.Require().NoError(err)
 
+	config, err := core.LoadConfigFromEnv()
+	s.Require().NoError(err)
+
 	s.service = NewDefaultService(
 		testutils.NewStubRepoService(
 			stubRepos(),
 			stubRepoReleases(),
 		),
 		&testutils.StubHTTPClient{
-			Contents: registryInfoContents(),
+			ContentsProvider: contentsProvider,
 		},
-		&core.Config{},
+		&config,
 		logger,
 	)
 }
@@ -84,6 +88,39 @@ func (s *DefaultServiceTestSuite) TestListVersions() {
 			},
 		},
 		versions,
+	)
+}
+
+func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
+	signingKeysInfo, err := testutils.GetSigningKeysFromEnv()
+	s.Require().NoError(err)
+
+	packageInfo, err := s.service.GetPackageInfo(
+		context.Background(),
+		&PackageInfoParams{
+			Organisation: "two-hundred",
+			Plugin:       "example",
+			Version:      "1.0.1",
+			OS:           "linux",
+			Arch:         "amd64",
+		},
+		"test-token",
+	)
+	s.Require().NoError(err)
+	s.Assert().Equal(
+		&types.PluginVersionPackage{
+			SupportedProtocols: []string{"1.4", "2.1"},
+			OS:                 "linux",
+			Arch:               "amd64",
+			Filename:           "celerity-provider-example_1.0.1_linux_amd64.zip",
+			// See the stubRepoReleases function for the URL in the source github releases.
+			DownloadURL:         *testutils.GithubAssetURL(6),
+			SHASumsURL:          packageInfoRegistrySHA256SumsURL(),
+			SHASumsSignatureURL: *testutils.GithubAssetURL(8),
+			SHASum:              "c635e6201021832cc1f4cfe5345",
+			SigningKeys:         signingKeysInfo.Expected,
+		},
+		packageInfo,
 	)
 }
 
@@ -153,6 +190,17 @@ func stubRepoReleases() map[string][]*github.RepositoryRelease {
 						Name: github.Ptr("celerity-provider-example_1.0.1_registry_info.json"),
 						URL:  testutils.GithubAssetURL(8),
 					},
+					// The following file gets its own separate URL to allow the contents retriever
+					// to easily identify it to return the SHA256SUMS contents instead of the registry
+					// info contents.
+					{
+						Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS"),
+						URL:  github.Ptr(packageInfoRegistrySHA256SumsURL()),
+					},
+					{
+						Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS.sig"),
+						URL:  testutils.GithubAssetURL(8),
+					},
 				},
 			},
 		},
@@ -208,6 +256,31 @@ func registryInfoContents() []byte {
 	{
 		"supportedProtocols": ["1.4", "2.1"]
 	}
+	`)
+}
+
+func contentsProvider(url string) ([]byte, error) {
+	if strings.HasPrefix(url, packageInfoRegistrySHA256SumsURL()) {
+		return packageSHASumContents(), nil
+	}
+
+	return registryInfoContents(), nil
+}
+
+func packageInfoRegistrySHA256SumsURL() string {
+	return "https://artifacts.example.com/celerity-provider-example/1.0.1/celerity-provider-example_1.0.1_SHA256SUMS"
+}
+
+func packageSHASumContents() []byte {
+	return []byte(`
+		c3e51ec2a5857d4e2e48af02de97  celerity-provider-example_1.0.1_darwin_amd64.zip
+		ed370cc761421bfd60479d4f6214  celerity-provider-example_1.0.1_darwin_arm64.zip
+		03f5694b5a0fec5b328365bb294  celerity-provider-example_1.0.1_docs.json
+		34623f6a541be48b5314e6e2ebb  celerity-provider-example_1.0.1_linux_386.zip
+		c635e6201021832cc1f4cfe5345  celerity-provider-example_1.0.1_linux_amd64.zip
+		4cfc841b4582ad748133dba0fce  celerity-provider-example_1.0.1_linux_arm.zip
+		14a971e72106337503baa26cfe4  celerity-provider-example_1.0.1_linux_arm64.zip
+		02a95af4369f9f0edc1d4ef6deb  celerity-provider-example_1.0.1_registry_info.json
 	`)
 }
 

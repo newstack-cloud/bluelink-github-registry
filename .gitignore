@@ -29,9 +29,10 @@ report.json
 
 # Environment variables and app config
 .env
-!.env.test
 
 tmp
 *-tmp
 
 .vscode
+
+*.key
