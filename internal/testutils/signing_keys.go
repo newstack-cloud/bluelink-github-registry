@@ -3,6 +3,7 @@ package testutils
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 
 	"github.com/two-hundred/celerity-github-registry/internal/signingkeys"
@@ -24,6 +25,8 @@ func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
 	if signingKeysSerialised == "" {
 		return nil, errors.New("no signing keys found in env")
 	}
+
+	fmt.Println("Serialised stuff here:", signingKeysSerialised)
 
 	signingKeysInternal := &types.IntermediarySigningKeys{}
 	err := json.Unmarshal([]byte(signingKeysSerialised), signingKeysInternal)
