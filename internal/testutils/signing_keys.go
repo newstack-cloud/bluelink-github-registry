@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/two-hundred/celerity-github-registry/internal/signingkeys"
 	"github.com/two-hundred/celerity-github-registry/internal/types"
@@ -27,6 +28,14 @@ func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
 	}
 
 	fmt.Println("Serialised stuff here:", signingKeysSerialised)
+	fmt.Println(
+		"Contains ASCII armor header?",
+		strings.Contains(signingKeysSerialised, "-----BEGIN PGP PUBLIC KEY BLOCK-----"),
+	)
+	fmt.Println(
+		"Contains ASCII armor footer?",
+		strings.Contains(signingKeysSerialised, "-----END PGP PUBLIC KEY BLOCK-----"),
+	)
 
 	signingKeysInternal := &types.IntermediarySigningKeys{}
 	err := json.Unmarshal([]byte(signingKeysSerialised), signingKeysInternal)
