@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/two-hundred/celerity-github-registry/internal/signingkeys"
@@ -21,8 +22,7 @@ type SigningKeysInfo struct {
 // This returns an expected output set of GPG public keys that
 // should be produced and the input string.
 func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
-	// signingKeysSerialised := os.Getenv("CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS")
-	signingKeysSerialised := testKey
+	signingKeysSerialised := os.Getenv("CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS")
 	if signingKeysSerialised == "" {
 		return nil, errors.New("no signing keys found in env")
 	}
@@ -75,7 +75,7 @@ func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
 			"contains literal new line characters that have not been unescaped?",
 			strings.Contains(key.PublicKey, "\\n"),
 		)
-		keyID, err := signingkeys.ExtractHexKeyID(key.PublicKey)
+		keyID, err := signingkeys.ExtractHexKeyID(testKey)
 		if err != nil {
 			return nil, err
 		}
