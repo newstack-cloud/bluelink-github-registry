@@ -36,7 +36,7 @@ You can deploy the registry to any environment that supports Docker, including K
 
 The Celerity GitHub Registry is versioned using [semantic versioning](https://semver.org/).
 The Docker image is tagged with the version number, and the `latest` tag always points to the latest stable release.
-On every push or PR into the `main` branch, a development build is pushed to the `main` docker image tag.
+There is a daily docker build for the `main` branch, this should be considered as a development build and can be used through the `main` docker image tag.
 
 ## Configuration
 

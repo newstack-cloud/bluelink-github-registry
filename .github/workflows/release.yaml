@@ -7,8 +7,13 @@ name: Release Celerity GitHub Registry
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
     tags: [ 'v*' ]
+  schedule:
+    # Every day at 9:00 UTC
+    # A docker build runs daily for the main branch to keep a running "development" image
+    # that can be used for testing, development and for users to test out unstable
+    # features or changes.
+    - cron: '0 9 * * *'
 
 env:
   REGISTRY: ghcr.io
