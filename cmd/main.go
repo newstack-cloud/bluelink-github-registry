@@ -12,7 +12,10 @@ import (
 
 func main() {
 	router := mux.NewRouter()
-	port, accessLogWriter, err := registry.Setup(router)
+	port, accessLogWriter, err := registry.Setup(
+		router,
+		registry.GetDependencies,
+	)
 	if err != nil {
 		log.Fatal(err)
 	}

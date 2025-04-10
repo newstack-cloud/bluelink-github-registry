@@ -6,6 +6,7 @@ services:
     container_name: celerity_github_registry
     environment:
       CELERITY_GITHUB_REGISTRY_BASE_URL: ${CELERITY_GITHUB_REGISTRY_BASE_URL}
+      CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS: ${CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS}
     networks:
       - gh_registry_network
     ports:
