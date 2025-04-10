@@ -47,7 +47,18 @@ func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
 		GPG: []*types.PublicGPGSigningKey{},
 	}
 
+	fmt.Println("length of parsed keys:", len(signingKeysInternal.Keys))
 	for _, key := range signingKeysInternal.Keys {
+		fmt.Println("length of public key:", len(key.PublicKey))
+		fmt.Println("public key:", key.PublicKey)
+		fmt.Println(
+			"contains ASCII armor header?",
+			strings.Contains(key.PublicKey, "-----BEGIN PGP PUBLIC KEY BLOCK-----"),
+		)
+		fmt.Println(
+			"contains ASCII armor footer?",
+			strings.Contains(key.PublicKey, "-----END PGP PUBLIC KEY BLOCK-----"),
+		)
 		keyID, err := signingkeys.ExtractHexKeyID(key.PublicKey)
 		if err != nil {
 			return nil, err
