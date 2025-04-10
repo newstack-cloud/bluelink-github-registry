@@ -111,7 +111,7 @@ The JSON contents should be of the following form:
 The public key should be in ASCII-armored format, and the file can contain multiple keys.
 This JSON contents should be prepared to be passed as an environment variable, with appropriate escaping to ensure it can be parsed as valid JSON by the registry application.
 
-_It should be noted that the signing keys environment variable contents **must** not contain any private keys, these must be kept separately in a secure environment and only used in your plugin release process._
+_It should be noted that the signing keys environment variable contents **must not** contain any private keys, these must be kept separately in a secure environment and only used in your plugin release process._
 
 ### HTTP Client Timeout
 
