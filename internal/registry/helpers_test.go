@@ -59,9 +59,18 @@ func (s *stubPluginService) ListVersions(
 	plugin string,
 	token string,
 ) (*types.PluginVersions, error) {
+	if plugin == "forbidden-plugin" {
+		return nil, plugins.ErrForbidden
+	}
+
 	if plugin != "aws" {
 		return nil, plugins.ErrRepoNotFound
 	}
+
+	if organisation == "other-org" {
+		return nil, plugins.ErrUnauthorised
+	}
+
 	return expectedVersions, nil
 }
 

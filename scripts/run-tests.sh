@@ -44,9 +44,6 @@ set -a
 . .env.test
 set +a
 
-echo "Public keys env var (CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS):"
-echo "$CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS"
-
 go test -timeout 30000ms -race -coverprofile=coverage.txt -coverpkg=./... -covermode=atomic `go list ./... | egrep -v '(/(testutils|tools))$'`
 
 if [ -z "$GITHUB_ACTION" ]; then

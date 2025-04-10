@@ -115,6 +115,48 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_404_response_for_missin
 	)
 }
 
+func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_an_inaccessible_org() {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		fmt.Sprintf("%s/plugins/other-org/aws/versions", s.server.URL),
+		nil,
+	)
+	s.Require().NoError(err)
+	req.Header.Set("celerity-gh-registry-token", "test-token")
+
+	resp, err := http.DefaultClient.Do(req)
+	s.Require().NoError(err)
+	s.Require().Equal(401, resp.StatusCode)
+	defer resp.Body.Close()
+	respBytes, err := io.ReadAll(resp.Body)
+	s.Require().NoError(err)
+	s.Require().Equal(
+		`{"message":"Unauthorized"}`,
+		string(respBytes),
+	)
+}
+
+func (s *GetPluginVersionsHandlerTestSuite) Test_returns_403_response_for_a_forbidden_plugin() {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		fmt.Sprintf("%s/plugins/two-hundred/forbidden-plugin/versions", s.server.URL),
+		nil,
+	)
+	s.Require().NoError(err)
+	req.Header.Set("celerity-gh-registry-token", "test-token")
+
+	resp, err := http.DefaultClient.Do(req)
+	s.Require().NoError(err)
+	s.Require().Equal(403, resp.StatusCode)
+	defer resp.Body.Close()
+	respBytes, err := io.ReadAll(resp.Body)
+	s.Require().NoError(err)
+	s.Require().Equal(
+		`{"message":"Forbidden"}`,
+		string(respBytes),
+	)
+}
+
 func TestGetPluginVersionsHandlerTestSuite(t *testing.T) {
 	suite.Run(t, new(GetPluginVersionsHandlerTestSuite))
 }

@@ -48,13 +48,6 @@ jobs:
       env:
         TEST_GPG_PUBLIC_KEY: ${{ secrets.TEST_GPG_PUBLIC_KEY }}
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: debug-artifact
-        path: |
-          .env.test
-          test.key
-
     - name: Run Tests
       run: bash scripts/run-tests.sh
     - name: SonarCloud Scan
