@@ -92,6 +92,10 @@ var (
 				},
 			},
 		},
+		Dependencies: map[string]string{
+			"celerity/aws":   "^3.0.0",
+			"celerity/azure": "~1.0.0",
+		},
 	}
 )
 

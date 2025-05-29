@@ -234,6 +234,7 @@ func ExtractPluginVersionPackage(
 		return nil, err
 	}
 	pluginPackage.SupportedProtocols = registryInfo.SupportedProtocols
+	pluginPackage.Dependencies = registryInfo.Dependencies
 
 	attachReleaseFileInfo(
 		params.Repository,

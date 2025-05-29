@@ -91,6 +91,9 @@ func expectedVersionPackage(
 		SHASumsSignatureURL: *testutils.GithubAssetURL(8),
 		SHASum:              "c635e6201021832cc1f4cfe5345",
 		SigningKeys:         expectedSigningKeys,
+		Dependencies: map[string]string{
+			"celerity/aws": "^1.0.0",
+		},
 	}
 }
 
@@ -211,7 +214,10 @@ func inputReleases1() []*github.RepositoryRelease {
 func registryInfoContents() []byte {
 	return []byte(`
 	{
-		"supportedProtocols": ["1.2", "2.0"]
+		"supportedProtocols": ["1.2", "2.0"],
+		"dependencies": {
+			"celerity/aws": "^1.0.0"
+		}
 	}
 	`)
 }

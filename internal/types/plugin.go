@@ -26,7 +26,8 @@ type PluginVersionPlatform struct {
 // the registry information for a plugin version
 // that is published with a plugin version release.
 type PluginRegistryInfo struct {
-	SupportedProtocols []string `json:"supportedProtocols"`
+	SupportedProtocols []string          `json:"supportedProtocols"`
+	Dependencies       map[string]string `json:"dependencies,omitempty"`
 }
 
 // PluginVersionPackage holds the information about
@@ -44,6 +45,7 @@ type PluginVersionPackage struct {
 	SHASumsSignatureURL string                `json:"shasumsSignatureUrl"`
 	SHASum              string                `json:"shasum"`
 	SigningKeys         *PublicGPGSigningKeys `json:"signingKeys"`
+	Dependencies        map[string]string     `json:"dependencies,omitempty"`
 }
 
 // PublicGPGSigningKeys holds the information about

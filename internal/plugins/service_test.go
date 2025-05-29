@@ -119,6 +119,9 @@ func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
 			SHASumsSignatureURL: *testutils.GithubAssetURL(8),
 			SHASum:              "c635e6201021832cc1f4cfe5345",
 			SigningKeys:         signingKeysInfo.Expected,
+			Dependencies: map[string]string{
+				"celerity/aws": "^1.0.0",
+			},
 		},
 		packageInfo,
 	)
@@ -254,7 +257,10 @@ func stubRepoReleases() map[string][]*github.RepositoryRelease {
 func registryInfoContents() []byte {
 	return []byte(`
 	{
-		"supportedProtocols": ["1.4", "2.1"]
+		"supportedProtocols": ["1.4", "2.1"],
+		"dependencies": {
+			"celerity/aws": "^1.0.0"
+		}
 	}
 	`)
 }

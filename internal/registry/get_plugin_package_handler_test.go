@@ -46,7 +46,7 @@ func (s *GetPluginPackageHandlerTestSuite) TearDownTest() {
 	s.server.Close()
 }
 
-func (s *GetPluginPackageHandlerTestSuite) Test_get_plugin_versions() {
+func (s *GetPluginPackageHandlerTestSuite) Test_get_plugin_package() {
 	req, err := http.NewRequest(
 		http.MethodGet,
 		fmt.Sprintf("%s/plugins/two-hundred/aws/1.0.1/package/linux/amd64", s.server.URL),
