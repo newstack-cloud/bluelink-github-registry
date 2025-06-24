@@ -1,10 +1,10 @@
 package registry
 
 import (
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/httputils"
-	"github.com/two-hundred/celerity-github-registry/internal/plugins"
-	"github.com/two-hundred/celerity-github-registry/internal/repos"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/httputils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/plugins"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/repos"
 	"go.uber.org/zap"
 )
 

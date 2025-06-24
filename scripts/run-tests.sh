@@ -26,7 +26,7 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 function help {
   cat << EOF
 Test runner
-Runs tests for the Celerity GitHub Registry:
+Runs tests for the Bluelink GitHub Registry:
 bash scripts/run-tests.sh
 EOF
 }

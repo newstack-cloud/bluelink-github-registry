@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
 	"github.com/stretchr/testify/suite"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
 	"go.uber.org/zap"
 )
 
@@ -43,7 +43,7 @@ func (s *GetManifestHandlerTestSuite) TearDownTest() {
 }
 
 func (s *GetManifestHandlerTestSuite) TestGetManifest() {
-	resp, err := http.Get(s.server.URL + "/.well-known/celerity-services.json")
+	resp, err := http.Get(s.server.URL + "/.well-known/bluelink-services.json")
 	s.Require().NoError(err)
 	s.Require().Equal(200, resp.StatusCode)
 	defer resp.Body.Close()
@@ -58,15 +58,15 @@ func (s *GetManifestHandlerTestSuite) TestGetManifest() {
 	s.Require().Equal(
 		&Manifest{
 			ProviderV1: &PluginTypeManifestInfo{
-				Endpoint:                  "http://gh-registry.celerity.local/plugins",
+				Endpoint:                  "http://gh-registry.bluelink.local/plugins",
 				DownloadAcceptContentType: DownloadContentType,
 			},
 			TransformerV1: &PluginTypeManifestInfo{
-				Endpoint:                  "http://gh-registry.celerity.local/plugins",
+				Endpoint:                  "http://gh-registry.bluelink.local/plugins",
 				DownloadAcceptContentType: DownloadContentType,
 			},
 			AuthV1: &AuthManifestInfo{
-				APIKeyHeader: "celerity-gh-registry-token",
+				APIKeyHeader: "bluelink-gh-registry-token",
 				DownloadAuth: "bearer",
 			},
 		},

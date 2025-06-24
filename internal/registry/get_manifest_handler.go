@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/httputils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/httputils"
 )
 
 // Manifest is the JSON manifest
 // for service discovery that provides thecontent for the
-// /.well-known/celerity-services.json document.
+// /.well-known/bluelink-services.json document.
 type Manifest struct {
 	ProviderV1    *PluginTypeManifestInfo `json:"provider.v1"`
 	TransformerV1 *PluginTypeManifestInfo `json:"transformer.v1"`

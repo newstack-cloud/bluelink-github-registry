@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/google/go-github/v70/github"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/testutils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 	"github.com/stretchr/testify/suite"
-	"github.com/two-hundred/celerity-github-registry/internal/testutils"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
 )
 
 type PluginUtilsTestSuite struct {
@@ -18,7 +18,7 @@ type PluginUtilsTestSuite struct {
 func (s *PluginUtilsTestSuite) Test_extracts_plugin_versions_from_the_provided_releases() {
 	pluginVersions, err := ExtractPluginVersions(
 		context.Background(),
-		"celerity-provider-example",
+		"bluelink-provider-example",
 		inputReleases1(),
 		&testutils.StubHTTPClient{
 			Contents: registryInfoContents(),
@@ -35,15 +35,15 @@ func (s *PluginUtilsTestSuite) Test_extracts_plugin_versions_from_the_provided_r
 func (s *PluginUtilsTestSuite) Test_finds_repository_for_provided_plugin() {
 	pluginRepo := FindPluginRepo(
 		reposToSearch(),
-		"two-hundred",
+		"newstack-cloud",
 		"example",
 	)
 	s.Assert().NotNil(pluginRepo)
 	s.Assert().Equal(
 		&github.Repository{
-			Name: github.Ptr("celerity-provider-example"),
+			Name: github.Ptr("bluelink-provider-example"),
 			Owner: &github.User{
-				Login: github.Ptr("two-hundred"),
+				Login: github.Ptr("newstack-cloud"),
 			},
 			Private: github.Ptr(true),
 		},
@@ -58,7 +58,7 @@ func (s *PluginUtilsTestSuite) Test_extracts_plugin_package_info_for_the_provide
 	versionPackage, err := ExtractPluginVersionPackage(
 		context.Background(),
 		&ExtractPluginVersionPackageParams{
-			Repository:            "celerity-provider-example",
+			Repository:            "bluelink-provider-example",
 			Release:               packageInfoRelease(),
 			Version:               "1.0.1",
 			OS:                    "linux",
@@ -84,7 +84,7 @@ func expectedVersionPackage(
 		SupportedProtocols: []string{"1.2", "2.0"},
 		OS:                 "linux",
 		Arch:               "amd64",
-		Filename:           "celerity-provider-example_1.0.1_linux_amd64.zip",
+		Filename:           "bluelink-provider-example_1.0.1_linux_amd64.zip",
 		// See the packageInfoRelease function for the URL in the source github releases.
 		DownloadURL:         *testutils.GithubAssetURL(6),
 		SHASumsURL:          packageInfoRegistrySHA256SumsURL(),
@@ -92,7 +92,7 @@ func expectedVersionPackage(
 		SHASum:              "c635e6201021832cc1f4cfe5345",
 		SigningKeys:         expectedSigningKeys,
 		Dependencies: map[string]string{
-			"celerity/aws": "^1.0.0",
+			"bluelink/aws": "^1.0.0",
 		},
 	}
 }
@@ -143,16 +143,16 @@ func expectedPluginVersions() *types.PluginVersions {
 func reposToSearch() []*github.Repository {
 	return []*github.Repository{
 		{
-			Name: github.Ptr("celerity-provider-example"),
+			Name: github.Ptr("bluelink-provider-example"),
 			Owner: &github.User{
-				Login: github.Ptr("two-hundred"),
+				Login: github.Ptr("newstack-cloud"),
 			},
 			Private: github.Ptr(true),
 		},
 		{
-			Name: github.Ptr("celerity-transformer-example"),
+			Name: github.Ptr("bluelink-transformer-example"),
 			Owner: &github.User{
-				Login: github.Ptr("two-hundred"),
+				Login: github.Ptr("newstack-cloud"),
 			},
 			Private: github.Ptr(true),
 		},
@@ -165,19 +165,19 @@ func inputReleases1() []*github.RepositoryRelease {
 			TagName: github.Ptr("v1.0.0"),
 			Assets: []*github.ReleaseAsset{
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.0_darwin_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.0_darwin_amd64.zip"),
 					URL:  testutils.GithubAssetURL(1),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.0_linux_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.0_linux_amd64.zip"),
 					URL:  testutils.GithubAssetURL(2),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.0_windows_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.0_windows_amd64.zip"),
 					URL:  testutils.GithubAssetURL(3),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.0_registry_info.json"),
+					Name: github.Ptr("bluelink-provider-example_1.0.0_registry_info.json"),
 					URL:  testutils.GithubAssetURL(4),
 				},
 			},
@@ -191,19 +191,19 @@ func inputReleases1() []*github.RepositoryRelease {
 			TagName: github.Ptr("v1.0.1"),
 			Assets: []*github.ReleaseAsset{
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.1_darwin_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.1_darwin_amd64.zip"),
 					URL:  testutils.GithubAssetURL(5),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.1_linux_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.1_linux_amd64.zip"),
 					URL:  testutils.GithubAssetURL(6),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.1_windows_amd64.zip"),
+					Name: github.Ptr("bluelink-provider-example_1.0.1_windows_amd64.zip"),
 					URL:  testutils.GithubAssetURL(7),
 				},
 				{
-					Name: github.Ptr("celerity-provider-example_1.0.1_registry_info.json"),
+					Name: github.Ptr("bluelink-provider-example_1.0.1_registry_info.json"),
 					URL:  testutils.GithubAssetURL(8),
 				},
 			},
@@ -216,7 +216,7 @@ func registryInfoContents() []byte {
 	{
 		"supportedProtocols": ["1.2", "2.0"],
 		"dependencies": {
-			"celerity/aws": "^1.0.0"
+			"bluelink/aws": "^1.0.0"
 		}
 	}
 	`)
@@ -227,15 +227,15 @@ func packageInfoRelease() *github.RepositoryRelease {
 		TagName: github.Ptr("v1.0.1"),
 		Assets: []*github.ReleaseAsset{
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_darwin_amd64.zip"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_darwin_amd64.zip"),
 				URL:  testutils.GithubAssetURL(5),
 			},
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_linux_amd64.zip"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_linux_amd64.zip"),
 				URL:  testutils.GithubAssetURL(6),
 			},
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_windows_amd64.zip"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_windows_amd64.zip"),
 				URL:  testutils.GithubAssetURL(7),
 			},
 			// The following files get their own separate URL to allow the contents retriever
@@ -243,15 +243,15 @@ func packageInfoRelease() *github.RepositoryRelease {
 			// These are the only two files that are downloaded in the process of preparing
 			// version package info.
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_registry_info.json"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_registry_info.json"),
 				URL:  github.Ptr(packageInfoRegistryInfoURL()),
 			},
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_SHA256SUMS"),
 				URL:  github.Ptr(packageInfoRegistrySHA256SumsURL()),
 			},
 			{
-				Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS.sig"),
+				Name: github.Ptr("bluelink-provider-example_1.0.1_SHA256SUMS.sig"),
 				URL:  testutils.GithubAssetURL(8),
 			},
 		},
@@ -259,11 +259,11 @@ func packageInfoRelease() *github.RepositoryRelease {
 }
 
 func packageInfoRegistryInfoURL() string {
-	return "https://artifacts.example.com/celerity-provider-example/1.0.1/celerity-provider-example_1.0.1_registry_info.json"
+	return "https://artifacts.example.com/bluelink-provider-example/1.0.1/bluelink-provider-example_1.0.1_registry_info.json"
 }
 
 func packageInfoRegistrySHA256SumsURL() string {
-	return "https://artifacts.example.com/celerity-provider-example/1.0.1/celerity-provider-example_1.0.1_SHA256SUMS"
+	return "https://artifacts.example.com/bluelink-provider-example/1.0.1/bluelink-provider-example_1.0.1_SHA256SUMS"
 }
 
 func providePackageInfoRequestContent(url string) ([]byte, error) {
@@ -280,14 +280,14 @@ func providePackageInfoRequestContent(url string) ([]byte, error) {
 
 func packageSHASumContents() []byte {
 	return []byte(`
-		c3e51ec2a5857d4e2e48af02de97  celerity-provider-example_1.0.1_darwin_amd64.zip
-		ed370cc761421bfd60479d4f6214  celerity-provider-example_1.0.1_darwin_arm64.zip
-		03f5694b5a0fec5b328365bb294  celerity-provider-example_1.0.1_docs.json
-		34623f6a541be48b5314e6e2ebb  celerity-provider-example_1.0.1_linux_386.zip
-		c635e6201021832cc1f4cfe5345  celerity-provider-example_1.0.1_linux_amd64.zip
-		4cfc841b4582ad748133dba0fce  celerity-provider-example_1.0.1_linux_arm.zip
-		14a971e72106337503baa26cfe4  celerity-provider-example_1.0.1_linux_arm64.zip
-		02a95af4369f9f0edc1d4ef6deb  celerity-provider-example_1.0.1_registry_info.json
+		c3e51ec2a5857d4e2e48af02de97  bluelink-provider-example_1.0.1_darwin_amd64.zip
+		ed370cc761421bfd60479d4f6214  bluelink-provider-example_1.0.1_darwin_arm64.zip
+		03f5694b5a0fec5b328365bb294  bluelink-provider-example_1.0.1_docs.json
+		34623f6a541be48b5314e6e2ebb  bluelink-provider-example_1.0.1_linux_386.zip
+		c635e6201021832cc1f4cfe5345  bluelink-provider-example_1.0.1_linux_amd64.zip
+		4cfc841b4582ad748133dba0fce  bluelink-provider-example_1.0.1_linux_arm.zip
+		14a971e72106337503baa26cfe4  bluelink-provider-example_1.0.1_linux_arm64.zip
+		02a95af4369f9f0edc1d4ef6deb  bluelink-provider-example_1.0.1_registry_info.json
 	`)
 }
 

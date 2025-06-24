@@ -6,14 +6,14 @@
 FROM golang:1.24.2-bookworm AS build
 
 # Add non-root user
-RUN useradd -u 1001 celerity
+RUN useradd -u 1001 bluelink
 
 RUN apt update && \
   apt upgrade -y && \
   apt install -y git build-essential curl && \
   apt install openssh-server -y
 
-WORKDIR /app/celerity_github_registry
+WORKDIR /app/bluelink_github_registry
 
 # Copy go module files to load dependencies.
 COPY go.mod ./go.mod
@@ -29,7 +29,7 @@ RUN go build \
   # which allows us to run the binary with scratch.
   -ldflags="-linkmode external -extldflags -static" \
   -tags netgo \
-  -o celerity_github_registry \
+  -o bluelink_github_registry \
   cmd/main.go
 
 ###################
@@ -42,13 +42,13 @@ WORKDIR /
 
 COPY --from=build /etc/passwd /etc/passwd
 
-COPY --from=build /app/celerity_github_registry/celerity_github_registry /celerity_github_registry
+COPY --from=build /app/bluelink_github_registry/bluelink_github_registry /bluelink_github_registry
 
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 # Use non-root user
-USER celerity
+USER bluelink
 
 EXPOSE 8085
 
-CMD ["/celerity_github_registry"]
+CMD ["/bluelink_github_registry"]

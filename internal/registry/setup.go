@@ -7,8 +7,8 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/plugins"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/plugins"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -63,10 +63,10 @@ func Setup(
 	})
 
 	// We need to serve a manifest for service discovery
-	// as per the Service Discovery protoocol used by the Celerity CLI
+	// as per the Service Discovery protoocol used by the Bluelink CLI
 	// and other clients.
 	router.Handle(
-		"/.well-known/celerity-services.json",
+		"/.well-known/bluelink-services.json",
 		GetManifestHandler(&config),
 	).Methods("GET")
 

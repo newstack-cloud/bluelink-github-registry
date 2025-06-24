@@ -5,8 +5,8 @@ import (
 	"errors"
 	"os"
 
-	"github.com/two-hundred/celerity-github-registry/internal/signingkeys"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/signingkeys"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 )
 
 type SigningKeysInfo struct {
@@ -15,12 +15,12 @@ type SigningKeysInfo struct {
 }
 
 // GetSigningKeysFromEnv retrieves the signing keys from the environment variable
-// CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS and unmarshals them into a
+// BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS and unmarshals them into a
 // PublicGPGSigningKeys struct.
 // This returns an expected output set of GPG public keys that
 // should be produced and the input string.
 func GetSigningKeysFromEnv() (*SigningKeysInfo, error) {
-	signingKeysSerialised := os.Getenv("CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS")
+	signingKeysSerialised := os.Getenv("BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS")
 	if signingKeysSerialised == "" {
 		return nil, errors.New("no signing keys found in env")
 	}

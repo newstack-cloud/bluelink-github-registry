@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 	"github.com/stretchr/testify/suite"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
 	"go.uber.org/zap"
 )
 
@@ -49,11 +49,11 @@ func (s *GetPluginVersionsHandlerTestSuite) TearDownTest() {
 func (s *GetPluginVersionsHandlerTestSuite) Test_get_plugin_versions() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/aws/versions", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)
@@ -76,7 +76,7 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_get_plugin_versions() {
 func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_missing_token() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/aws/versions", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
@@ -97,11 +97,11 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_missin
 func (s *GetPluginVersionsHandlerTestSuite) Test_returns_404_response_for_missing_plugin_repo() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/azure/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/azure/versions", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)
@@ -122,7 +122,7 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_an_ina
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)
@@ -139,11 +139,11 @@ func (s *GetPluginVersionsHandlerTestSuite) Test_returns_401_response_for_an_ina
 func (s *GetPluginVersionsHandlerTestSuite) Test_returns_403_response_for_a_forbidden_plugin() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/forbidden-plugin/versions", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/forbidden-plugin/versions", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)

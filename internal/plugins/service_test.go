@@ -6,10 +6,10 @@ import (
 	"testing"
 
 	"github.com/google/go-github/v70/github"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/testutils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 	"github.com/stretchr/testify/suite"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/testutils"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
 	"go.uber.org/zap"
 )
 
@@ -41,7 +41,7 @@ func (s *DefaultServiceTestSuite) SetupTest() {
 func (s *DefaultServiceTestSuite) TestListVersions() {
 	versions, err := s.service.ListVersions(
 		context.Background(),
-		"two-hundred",
+		"newstack-cloud",
 		"example",
 		"test-token",
 	)
@@ -98,7 +98,7 @@ func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
 	packageInfo, err := s.service.GetPackageInfo(
 		context.Background(),
 		&PackageInfoParams{
-			Organisation: "two-hundred",
+			Organisation: "newstack-cloud",
 			Plugin:       "example",
 			Version:      "1.0.1",
 			OS:           "linux",
@@ -112,7 +112,7 @@ func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
 			SupportedProtocols: []string{"1.4", "2.1"},
 			OS:                 "linux",
 			Arch:               "amd64",
-			Filename:           "celerity-provider-example_1.0.1_linux_amd64.zip",
+			Filename:           "bluelink-provider-example_1.0.1_linux_amd64.zip",
 			// See the stubRepoReleases function for the URL in the source github releases.
 			DownloadURL:         *testutils.GithubAssetURL(6),
 			SHASumsURL:          packageInfoRegistrySHA256SumsURL(),
@@ -120,7 +120,7 @@ func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
 			SHASum:              "c635e6201021832cc1f4cfe5345",
 			SigningKeys:         signingKeysInfo.Expected,
 			Dependencies: map[string]string{
-				"celerity/aws": "^1.0.0",
+				"bluelink/aws": "^1.0.0",
 			},
 		},
 		packageInfo,
@@ -130,21 +130,21 @@ func (s *DefaultServiceTestSuite) TestGetPackageInfo() {
 func stubRepos() []*github.Repository {
 	return []*github.Repository{
 		{
-			Name:        github.Ptr("celerity-provider-example"),
-			FullName:    github.Ptr("two-hundred/celerity-provider-example"),
-			Description: github.Ptr("A plugin for Celerity"),
+			Name:        github.Ptr("bluelink-provider-example"),
+			FullName:    github.Ptr("newstack-cloud/bluelink-provider-example"),
+			Description: github.Ptr("A plugin for Bluelink"),
 			Private:     github.Ptr(true),
 			Owner: &github.User{
-				Login: github.Ptr("two-hundred"),
+				Login: github.Ptr("newstack-cloud"),
 			},
 		},
 		{
-			Name:        github.Ptr("celerity-transformer-exampleTransform"),
-			FullName:    github.Ptr("two-hundred/celerity-transformer-exampleTransform"),
-			Description: github.Ptr("A plugin for Celerity"),
+			Name:        github.Ptr("bluelink-transformer-exampleTransform"),
+			FullName:    github.Ptr("newstack-cloud/bluelink-transformer-exampleTransform"),
+			Description: github.Ptr("A plugin for Bluelink"),
 			Private:     github.Ptr(true),
 			Owner: &github.User{
-				Login: github.Ptr("two-hundred"),
+				Login: github.Ptr("newstack-cloud"),
 			},
 		},
 	}
@@ -152,24 +152,24 @@ func stubRepos() []*github.Repository {
 
 func stubRepoReleases() map[string][]*github.RepositoryRelease {
 	return map[string][]*github.RepositoryRelease{
-		"celerity-provider-example": {
+		"bluelink-provider-example": {
 			{
 				TagName: github.Ptr("v1.0.0"),
 				Assets: []*github.ReleaseAsset{
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.0_darwin_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.0_darwin_amd64.zip"),
 						URL:  testutils.GithubAssetURL(1),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.0_linux_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.0_linux_amd64.zip"),
 						URL:  testutils.GithubAssetURL(2),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.0_windows_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.0_windows_amd64.zip"),
 						URL:  testutils.GithubAssetURL(3),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.0_registry_info.json"),
+						Name: github.Ptr("bluelink-provider-example_1.0.0_registry_info.json"),
 						URL:  testutils.GithubAssetURL(4),
 					},
 				},
@@ -178,53 +178,53 @@ func stubRepoReleases() map[string][]*github.RepositoryRelease {
 				TagName: github.Ptr("v1.0.1"),
 				Assets: []*github.ReleaseAsset{
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_darwin_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_darwin_amd64.zip"),
 						URL:  testutils.GithubAssetURL(5),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_linux_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_linux_amd64.zip"),
 						URL:  testutils.GithubAssetURL(6),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_windows_amd64.zip"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_windows_amd64.zip"),
 						URL:  testutils.GithubAssetURL(7),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_registry_info.json"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_registry_info.json"),
 						URL:  testutils.GithubAssetURL(8),
 					},
 					// The following file gets its own separate URL to allow the contents retriever
 					// to easily identify it to return the SHA256SUMS contents instead of the registry
 					// info contents.
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_SHA256SUMS"),
 						URL:  github.Ptr(packageInfoRegistrySHA256SumsURL()),
 					},
 					{
-						Name: github.Ptr("celerity-provider-example_1.0.1_SHA256SUMS.sig"),
+						Name: github.Ptr("bluelink-provider-example_1.0.1_SHA256SUMS.sig"),
 						URL:  testutils.GithubAssetURL(8),
 					},
 				},
 			},
 		},
-		"celerity-transformer-exampleTransform": {
+		"bluelink-transformer-exampleTransform": {
 			{
 				TagName: github.Ptr("v1.0.0"),
 				Assets: []*github.ReleaseAsset{
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.0.0_darwin_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.0.0_darwin_amd64.zip"),
 						URL:  testutils.GithubAssetURL(9),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.0.0_linux_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.0.0_linux_amd64.zip"),
 						URL:  testutils.GithubAssetURL(10),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.0.0_windows_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.0.0_windows_amd64.zip"),
 						URL:  testutils.GithubAssetURL(11),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.0.0_registry_info.json"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.0.0_registry_info.json"),
 						URL:  testutils.GithubAssetURL(12),
 					},
 				},
@@ -233,19 +233,19 @@ func stubRepoReleases() map[string][]*github.RepositoryRelease {
 				TagName: github.Ptr("v1.1.0"),
 				Assets: []*github.ReleaseAsset{
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.1.0_darwin_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.1.0_darwin_amd64.zip"),
 						URL:  testutils.GithubAssetURL(13),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.1.0_linux_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.1.0_linux_amd64.zip"),
 						URL:  testutils.GithubAssetURL(14),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.1.0_windows_amd64.zip"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.1.0_windows_amd64.zip"),
 						URL:  testutils.GithubAssetURL(15),
 					},
 					{
-						Name: github.Ptr("celerity-transformer-exampleTransform_1.1.0_registry_info.json"),
+						Name: github.Ptr("bluelink-transformer-exampleTransform_1.1.0_registry_info.json"),
 						URL:  testutils.GithubAssetURL(16),
 					},
 				},
@@ -259,7 +259,7 @@ func registryInfoContents() []byte {
 	{
 		"supportedProtocols": ["1.4", "2.1"],
 		"dependencies": {
-			"celerity/aws": "^1.0.0"
+			"bluelink/aws": "^1.0.0"
 		}
 	}
 	`)
@@ -274,19 +274,19 @@ func contentsProvider(url string) ([]byte, error) {
 }
 
 func packageInfoRegistrySHA256SumsURL() string {
-	return "https://artifacts.example.com/celerity-provider-example/1.0.1/celerity-provider-example_1.0.1_SHA256SUMS"
+	return "https://artifacts.example.com/bluelink-provider-example/1.0.1/bluelink-provider-example_1.0.1_SHA256SUMS"
 }
 
 func packageSHASumContents() []byte {
 	return []byte(`
-		c3e51ec2a5857d4e2e48af02de97  celerity-provider-example_1.0.1_darwin_amd64.zip
-		ed370cc761421bfd60479d4f6214  celerity-provider-example_1.0.1_darwin_arm64.zip
-		03f5694b5a0fec5b328365bb294  celerity-provider-example_1.0.1_docs.json
-		34623f6a541be48b5314e6e2ebb  celerity-provider-example_1.0.1_linux_386.zip
-		c635e6201021832cc1f4cfe5345  celerity-provider-example_1.0.1_linux_amd64.zip
-		4cfc841b4582ad748133dba0fce  celerity-provider-example_1.0.1_linux_arm.zip
-		14a971e72106337503baa26cfe4  celerity-provider-example_1.0.1_linux_arm64.zip
-		02a95af4369f9f0edc1d4ef6deb  celerity-provider-example_1.0.1_registry_info.json
+		c3e51ec2a5857d4e2e48af02de97  bluelink-provider-example_1.0.1_darwin_amd64.zip
+		ed370cc761421bfd60479d4f6214  bluelink-provider-example_1.0.1_darwin_arm64.zip
+		03f5694b5a0fec5b328365bb294  bluelink-provider-example_1.0.1_docs.json
+		34623f6a541be48b5314e6e2ebb  bluelink-provider-example_1.0.1_linux_386.zip
+		c635e6201021832cc1f4cfe5345  bluelink-provider-example_1.0.1_linux_amd64.zip
+		4cfc841b4582ad748133dba0fce  bluelink-provider-example_1.0.1_linux_arm.zip
+		14a971e72106337503baa26cfe4  bluelink-provider-example_1.0.1_linux_arm64.zip
+		02a95af4369f9f0edc1d4ef6deb  bluelink-provider-example_1.0.1_registry_info.json
 	`)
 }
 

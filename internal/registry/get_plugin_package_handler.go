@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/httputils"
-	"github.com/two-hundred/celerity-github-registry/internal/plugins"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/httputils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/plugins"
 	"go.uber.org/zap"
 )
 

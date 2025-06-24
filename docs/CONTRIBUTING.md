@@ -1,4 +1,4 @@
-# Contributing to the Celerity GitHub Registry
+# Contributing to the Bluelink GitHub Registry
 
 ## Setup
 
@@ -32,10 +32,10 @@ To run the registry locally, you need to set up a local DNS entry for the regist
 This can be done by adding the following line to your `/etc/hosts` (or equivalent) file:
 
 ```bash
-127.0.0.1 gh-registry.celerity.local
+127.0.0.1 gh-registry.bluelink.local
 ```
 
-This will allow you to access the registry at `http://gh-registry.celerity.local`
+This will allow you to access the registry at `http://gh-registry.bluelink.local`
 when you spin up the registry locally using the provided docker compose stack.
 
 **If you are not using the default port (8085), you will need to update `nginx.local.conf` to use your alternate port.**

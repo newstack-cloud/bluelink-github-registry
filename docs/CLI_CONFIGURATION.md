@@ -1,18 +1,18 @@
-# Configuring Celerity CLI to use the registry
+# Configuring Bluelink CLI to use the registry
 
-This document provides guidance on how to configure the Celerity CLI to use an instance of the Celerity GitHub Registry for private plugins.
+This document provides guidance on how to configure the Bluelink CLI to use an instance of the Bluelink GitHub Registry for private plugins.
 
 ## Configuration
 
-There is only one piece of configuration required to use the Celerity GitHub Registry with the Celerity CLI, and that is to configure the authentication token.
+There is only one piece of configuration required to use the Bluelink GitHub Registry with the Bluelink CLI, and that is to configure the authentication token.
 
-The Celerity CLI will automatically resolve the discovery document based on the plugin ID prefix (e.g. `registry.example.io` for a plugin with an ID of `registry.example.io/org/provider`), so there is no need to configure registry URLs for the CLI.
+The Bluelink CLI will automatically resolve the discovery document based on the plugin ID prefix (e.g. `registry.example.io` for a plugin with an ID of `registry.example.io/org/provider`), so there is no need to configure registry URLs for the CLI.
 
 Authentication needs to be configured to let the CLI know how to authenticate with the registry when calling the registry protocol endpoints.
 
 ### Configure authentication
 
-In your `$HOME/.celerity/auth.json`, you will need to the following entry:
+In your `$HOME/.bluelink/auth.json`, you will need to the following entry:
 
 ```json
 {

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/two-hundred/celerity-github-registry/internal/registry"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/registry"
 )
 
 func main() {

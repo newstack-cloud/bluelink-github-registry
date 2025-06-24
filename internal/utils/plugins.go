@@ -11,14 +11,14 @@ import (
 	"strings"
 
 	"github.com/google/go-github/v70/github"
-	"github.com/two-hundred/celerity-github-registry/internal/httputils"
-	"github.com/two-hundred/celerity-github-registry/internal/signingkeys"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/httputils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/signingkeys"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 )
 
 // ExtractPluginVersions extracts the plugin versions from the GitHub releases
 // and returns them in a format that is compatible with the
-// Celerity registry protocol.
+// Bluelink registry protocol.
 func ExtractPluginVersions(
 	ctx context.Context,
 	repository string,
@@ -195,7 +195,7 @@ func FindPluginRepo(
 // based on the plugin name and type.
 func RepoName(pluginName string, pluginType string) string {
 	return fmt.Sprintf(
-		"celerity-%s-%s",
+		"bluelink-%s-%s",
 		pluginType,
 		pluginName,
 	)

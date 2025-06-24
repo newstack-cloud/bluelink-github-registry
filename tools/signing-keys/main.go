@@ -56,7 +56,7 @@ func main() {
 	}
 
 	envVarLine := fmt.Sprintf(
-		"CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS='%s'\n",
+		"BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS='%s'\n",
 		string(bytes),
 	)
 
@@ -72,7 +72,7 @@ func main() {
 		existingLineIndex := slices.IndexFunc(lines, func(line string) bool {
 			return strings.HasPrefix(
 				strings.TrimSpace(line),
-				"CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS=",
+				"BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS=",
 			)
 		})
 

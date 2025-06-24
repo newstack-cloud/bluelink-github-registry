@@ -1,31 +1,31 @@
-# Celerity GitHub Registry
+# Bluelink GitHub Registry
 
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=two-hundred_celerity-github-registry&metric=coverage)](https://sonarcloud.io/summary/new_code?id=two-hundred_celerity-github-registry)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=two-hundred_celerity-github-registry&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=two-hundred_celerity-github-registry)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=two-hundred_celerity-github-registry&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=two-hundred_celerity-github-registry)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=newstack-cloud_bluelink-github-registry&metric=coverage)](https://sonarcloud.io/summary/new_code?id=newstack-cloud_bluelink-github-registry)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=newstack-cloud_bluelink-github-registry&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=newstack-cloud_bluelink-github-registry)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=newstack-cloud_bluelink-github-registry&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=newstack-cloud_bluelink-github-registry)
 
-A [Celerity Registry Protocol](https://www.celerityframework.io/plugin-framework/docs/registry-protocols-formats/registry-protocol) implementation for plugins sourced from private GitHub repositories.
+A [Bluelink Registry Protocol](https://www.bluelink.dev/plugin-framework/docs/registry-protocols-formats/registry-protocol) implementation for plugins sourced from private GitHub repositories.
 
 ## Usage
 
-The Celerity GitHub Registry is distributed as a Docker image that is published to the GitHub Container Registry.
+The Bluelink GitHub Registry is distributed as a Docker image that is published to the GitHub Container Registry.
 
 To run the registry, you can use the following command:
 
 ```bash
 docker run -d \
-  --name celerity-github-registry \
+  --name bluelink-github-registry \
   -p 8085:8085 \
-  ghcr.io/two-hundred/celerity-github-registry:latest
+  ghcr.io/newstack-cloud/bluelink-github-registry:latest
 ```
 
 Docker compose example:
 
 ```yaml
 services:
-    celerity-github-registry:
-        image: ghcr.io/two-hundred/celerity-github-registry:latest
-        container_name: celerity-github-registry
+    bluelink-github-registry:
+        image: ghcr.io/newstack-cloud/bluelink-github-registry:latest
+        container_name: bluelink-github-registry
         ports:
         - "8085:8085"
 ```
@@ -34,7 +34,7 @@ You can deploy the registry to any environment that supports Docker, including K
 
 ### Releases and Docker tags
 
-The Celerity GitHub Registry is versioned using [semantic versioning](https://semver.org/).
+The Bluelink GitHub Registry is versioned using [semantic versioning](https://semver.org/).
 The Docker image is tagged with the version number, and the `latest` tag always points to the latest stable release.
 There is a daily docker build for the `main` branch, this should be considered as a development build and can be used through the `main` docker image tag.
 
@@ -46,7 +46,7 @@ The following environment variables are supported, where some are required and s
 
 ### Port 
 
-`CELERITY_GITHUB_REGISTRY_PORT`
+`BLUELINK_GITHUB_REGISTRY_PORT`
 
 **_optional_**
 
@@ -56,7 +56,7 @@ The port on which the registry will listen for incoming requests.
 
 ### Auth Token Header
 
-`CELERITY_GITHUB_REGISTRY_AUTH_TOKEN_HEADER`
+`BLUELINK_GITHUB_REGISTRY_AUTH_TOKEN_HEADER`
 
 **_optional_**
 
@@ -65,11 +65,11 @@ This will be used to authenticate requests and is where a GitHub fine-grained pe
 You will need to make sure that the fine-grained token is for the resource owner of the plugin repositories (e.g. the GitHub user or organisation that owns the plugin repositories).
 The service discovery document for the registry will include this header in the `auth.v1` section as the value of the `apiKeyHeader` field.
 
-**default value:** `celerity-gh-registry-token`
+**default value:** `bluelink-gh-registry-token`
 
 ### Registry Base URL 
 
-`CELERITY_GITHUB_REGISTRY_BASE_URL`
+`BLUELINK_GITHUB_REGISTRY_BASE_URL`
 
 **_required_**
 
@@ -80,7 +80,7 @@ When deploying the registry this would be something like `https://registry.examp
 or when running locally it could be `http://registry.example.local`.
 
 The fully-qualified domain name in the URL must be the same as the prefix for plugins in the registry.
-For example, if the base URL is `https://registry.example.io`, then the plugin prefix must be `registry.example.io` in order for the Celerity CLI to be able to find the correct service discovery document.
+For example, if the base URL is `https://registry.example.io`, then the plugin prefix must be `registry.example.io` in order for the Bluelink CLI to be able to find the correct service discovery document.
 
 _Even when running locally, it is best to use a host name alias instead of localhost with port numbers due to the way the CLI resolves the registry based on the domain prefix in the plugin ID._
 
@@ -88,11 +88,11 @@ _Even when running locally, it is best to use a host name alias instead of local
 
 ### Signing Public Keys
 
-`CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS`
+`BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS`
 
 **_required_**
 
-A serialised JSON string that contains the gpg public keys that can be used by the Celerity CLI (and other clients) to verify the signatures of the plugins in the registry as per the [Registry Protocol](https://www.celerityframework.io/plugin-framework/docs/registry-protocols-formats/registry-protocol).
+A serialised JSON string that contains the gpg public keys that can be used by the Bluelink CLI (and other clients) to verify the signatures of the plugins in the registry as per the [Registry Protocol](https://www.bluelink.dev/plugin-framework/docs/registry-protocols-formats/registry-protocol).
 The amount of signing keys that can be stored in this environment variable is limited by the maximum length (in bytes) of an environment variable in the operating system running the registry application.
 You can find instructions to generate the signing keys environment variable [here](docs/SIGNING_KEYS.md).
 
@@ -115,7 +115,7 @@ _It should be noted that the signing keys environment variable contents **must n
 
 ### HTTP Client Timeout
 
-`CELERITY_GITHUB_REGISTRY_HTTP_CLIENT_TIMEOUT`
+`BLUELINK_GITHUB_REGISTRY_HTTP_CLIENT_TIMEOUT`
 
 **_optional_**
 
@@ -126,7 +126,7 @@ for a plugin version.
 
 ### Logging Level
 
-`CELERITY_GITHUB_REGISTRY_LOGGING_LEVEL`
+`BLUELINK_GITHUB_REGISTRY_LOGGING_LEVEL`
 
 **_optional_**
 
@@ -137,7 +137,7 @@ This will control the verbosity of the logs that are generated by the registry.
 
 ### Environment
 
-`CELERITY_GITHUB_REGISTRY_ENVIRONMENT`
+`BLUELINK_GITHUB_REGISTRY_ENVIRONMENT`
 
 **_optional_**
 
@@ -148,7 +148,7 @@ This is primarily used to control the formatting of logs. Logs are structured JS
 
 ### Access Log File
 
-`CELERITY_GITHUB_REGISTRY_ACCESS_LOG_FILE`
+`BLUELINK_GITHUB_REGISTRY_ACCESS_LOG_FILE`
 
 **_optional_**
 
@@ -157,7 +157,7 @@ If not specified, the access log will be written to `stdout`.
 
 ### Application Output Log File
 
-`CELERITY_GITHUB_REGISTRY_OUTPUT_LOG_FILE`
+`BLUELINK_GITHUB_REGISTRY_OUTPUT_LOG_FILE`
 
 **_optional_**
 
@@ -166,7 +166,7 @@ If not specified, the application logs will be written to `stdout`.
 
 ### Application Error Log File
 
-`CELERITY_GITHUB_REGISTRY_ERROR_LOG_FILE`
+`BLUELINK_GITHUB_REGISTRY_ERROR_LOG_FILE`
 
 **_optional_**
 
@@ -175,5 +175,5 @@ If not specified, the error logs will be written to `stderr`.
 
 ## Additional documentation
 
-- [Configuring the Celerity CLI to use the registry](docs/CLI_CONFIGURATION.md)
+- [Configuring the Bluelink CLI to use the registry](docs/CLI_CONFIGURATION.md)
 - [Contributing](docs/CONTRIBUTING.md)

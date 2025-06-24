@@ -1,22 +1,22 @@
 services:
-  celerity_github_registry:
+  bluelink_github_registry:
     build:
       context: .
       dockerfile: Dockerfile.local
-    container_name: celerity_github_registry
+    container_name: bluelink_github_registry
     environment:
-      CELERITY_GITHUB_REGISTRY_BASE_URL: ${CELERITY_GITHUB_REGISTRY_BASE_URL}
-      CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS: ${CELERITY_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS}
+      BLUELINK_GITHUB_REGISTRY_BASE_URL: ${BLUELINK_GITHUB_REGISTRY_BASE_URL}
+      BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS: ${BLUELINK_GITHUB_REGISTRY_SIGNING_PUBLIC_KEYS}
     networks:
       - gh_registry_network
     ports:
       - 8085:8085
     volumes:
-      - ./:/app/celerity_github_registry
+      - ./:/app/bluelink_github_registry
 
   nginx:
     image: nginx:latest
-    container_name: celerity_github_registry_nginx
+    container_name: bluelink_github_registry_nginx
     networks:
       - gh_registry_network
     ports:

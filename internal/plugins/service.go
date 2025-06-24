@@ -6,11 +6,11 @@ import (
 	"net/http"
 
 	"github.com/google/go-github/v70/github"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/httputils"
-	"github.com/two-hundred/celerity-github-registry/internal/repos"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
-	"github.com/two-hundred/celerity-github-registry/internal/utils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/httputils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/repos"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/utils"
 	"go.uber.org/zap"
 )
 
@@ -59,7 +59,7 @@ type serviceImpl struct {
 // NewDefaultService creates a new instance of the default
 // implementation of a service to retrieve plugin version
 // information to fulfil the requirements of the
-// Celerity registry protocol.
+// Bluelink registry protocol.
 func NewDefaultService(
 	repoService repos.Service,
 	httpClient httputils.Client,

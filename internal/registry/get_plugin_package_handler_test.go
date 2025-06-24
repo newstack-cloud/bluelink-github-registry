@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/core"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 	"github.com/stretchr/testify/suite"
-	"github.com/two-hundred/celerity-github-registry/internal/core"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
 	"go.uber.org/zap"
 )
 
@@ -49,11 +49,11 @@ func (s *GetPluginPackageHandlerTestSuite) TearDownTest() {
 func (s *GetPluginPackageHandlerTestSuite) Test_get_plugin_package() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/1.0.1/package/linux/amd64", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/aws/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)
@@ -76,7 +76,7 @@ func (s *GetPluginPackageHandlerTestSuite) Test_get_plugin_package() {
 func (s *GetPluginPackageHandlerTestSuite) Test_returns_401_response_for_missing_token() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/aws/1.0.1/package/linux/amd64", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/aws/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
@@ -97,11 +97,11 @@ func (s *GetPluginPackageHandlerTestSuite) Test_returns_401_response_for_missing
 func (s *GetPluginPackageHandlerTestSuite) Test_returns_404_response_for_missing_plugin_repo() {
 	req, err := http.NewRequest(
 		http.MethodGet,
-		fmt.Sprintf("%s/plugins/two-hundred/azure/1.0.1/package/linux/amd64", s.server.URL),
+		fmt.Sprintf("%s/plugins/newstack-cloud/azure/1.0.1/package/linux/amd64", s.server.URL),
 		nil,
 	)
 	s.Require().NoError(err)
-	req.Header.Set("celerity-gh-registry-token", "test-token")
+	req.Header.Set("bluelink-gh-registry-token", "test-token")
 
 	resp, err := http.DefaultClient.Do(req)
 	s.Require().NoError(err)

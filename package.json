@@ -1,9 +1,9 @@
 {
-  "name": "celerity-github-registry",
+  "name": "bluelink-github-registry",
   "version": "1.0.0",
-  "description": "Dependencies for scripts and git hooks used in the Celerity registry backed by private GitHub repos",
+  "description": "Dependencies for scripts and git hooks used in the Bluelink registry backed by private GitHub repos",
   "main": "index.js",
-  "repository": "git@github.com:two-hundred/celerity-github-registry.git",
+  "repository": "git@github.com:newstack-cloud/bluelink-github-registry.git",
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0"

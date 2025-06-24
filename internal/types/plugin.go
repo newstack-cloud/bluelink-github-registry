@@ -34,7 +34,7 @@ type PluginRegistryInfo struct {
 // the package information for a plugin version
 // that is published with a plugin version release.
 // This represents the structure of a plugin version package
-// expected by the Celerity registry protocol.
+// expected by the Bluelink registry protocol.
 type PluginVersionPackage struct {
 	SupportedProtocols  []string              `json:"supportedProtocols"`
 	OS                  string                `json:"os"`

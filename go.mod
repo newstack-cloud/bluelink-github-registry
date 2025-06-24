@@ -1,4 +1,4 @@
-module github.com/two-hundred/celerity-github-registry
+module github.com/newstack-cloud/bluelink-github-registry
 
 go 1.23.4
 

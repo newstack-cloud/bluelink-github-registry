@@ -3,9 +3,9 @@ package registry
 import (
 	"context"
 
-	"github.com/two-hundred/celerity-github-registry/internal/plugins"
-	"github.com/two-hundred/celerity-github-registry/internal/testutils"
-	"github.com/two-hundred/celerity-github-registry/internal/types"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/plugins"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/testutils"
+	"github.com/newstack-cloud/bluelink-github-registry/internal/types"
 )
 
 type stubPluginService struct{}
@@ -79,7 +79,7 @@ var (
 		SupportedProtocols:  []string{"1.5", "2.1"},
 		OS:                  "linux",
 		Arch:                "amd64",
-		Filename:            "celerity-provider-aws_3.0.1_linux_amd64.zip",
+		Filename:            "bluelink-provider-aws_3.0.1_linux_amd64.zip",
 		DownloadURL:         *testutils.GithubAssetURL(1),
 		SHASumsURL:          *testutils.GithubAssetURL(2),
 		SHASumsSignatureURL: *testutils.GithubAssetURL(3),
@@ -93,8 +93,8 @@ var (
 			},
 		},
 		Dependencies: map[string]string{
-			"celerity/aws":   "^3.0.0",
-			"celerity/azure": "~1.0.0",
+			"bluelink/aws":   "^3.0.0",
+			"bluelink/azure": "~1.0.0",
 		},
 	}
 )
